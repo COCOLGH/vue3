@@ -16,6 +16,7 @@ export default defineComponent({
 
     return () => {
       const num = numberRef.value
+      // jsx 应用例子
       return (
         <div id="app">
           <img src={img} alt="vue logo.png" />
@@ -24,6 +25,7 @@ export default defineComponent({
       )
     }
 
+    //  setup 返回render函数应用例子
     //    return () => {
     //       const num = numberRef.value
     //       return h('div', {id: 'app'}, [

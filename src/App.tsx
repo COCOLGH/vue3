@@ -1,36 +1,49 @@
-import { defineComponent, h, ref, reactive } from "vue"
-const img = require("./assets/logo.png") // eslint-disable-line
+import { defineComponent, ref } from "vue"
+import { createUseStyles } from "vue-jss"
+import MonacoEditor from "./components/MonacoEditor"
+
+function toJson(data: any) {
+  return JSON.stringify(data, null, 2)
+}
+
+const schema = {
+  type: "string",
+}
+
+const useStyles = createUseStyles({
+  editor: {
+    minHeight: "100vh",
+  },
+})
 
 export default defineComponent({
   setup() {
-    const state = reactive({
-      name: "闭包应用例子",
-    })
+    const classesRef = useStyles()
 
-    const numberRef = ref(1)
-
-    // setInterval(() => {
-    //   state.name += "3"
-    //   numberRef.value += 1
-    // }, 1000)
+    const schemaRef = ref(schema)
+    const handleCodeChange = (code: string) => {
+      let schema: any
+      try {
+        schema = JSON.parse(code)
+      } catch (err) {
+        schemaRef.value = schema
+      }
+    }
 
     return () => {
-      const num = numberRef.value
-      // jsx 应用例子
+      const classes = classesRef.value
+
+      const code = toJson(schemaRef.value)
+
       return (
-        <div id="app">
-          <img src={img} alt="vue logo.png" />
-          <p>{state.name + num}</p>
+        <div class={classes.editor}>
+          <MonacoEditor
+            code={code}
+            onChange={handleCodeChange}
+            title="schema eg."
+          />
         </div>
       )
     }
-
-    //  setup 返回render函数应用例子
-    //    return () => {
-    //       const num = numberRef.value
-    //       return h('div', {id: 'app'}, [
-    //          h('p', state.name)
-    //       ])
-    //    }
   },
 })

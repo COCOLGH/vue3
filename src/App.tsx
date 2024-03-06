@@ -1,40 +1,49 @@
-/*
- * @Author: cocol cocol@qq.com
- * @Date: 2024-03-04 23:36:42
- * @LastEditors: cocol cocol@qq.com
- * @LastEditTime: 2024-03-06 22:51:59
- * @FilePath: \vue3\src\App.tsx
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-import { defineComponent, ref, reactive } from "vue"
+import { defineComponent, ref } from "vue"
+import { createUseStyles } from "vue-jss"
+import MonacoEditor from "./components/MonacoEditor"
+
+function toJson(data: any) {
+  return JSON.stringify(data, null, 2)
+}
+
+const schema = {
+  type: "string",
+}
+
+const useStyles = createUseStyles({
+  editor: {
+    minHeight: "100vh",
+  },
+})
 
 export default defineComponent({
   setup() {
-    const state = reactive({
-      name: "闭包应用例子",
-    })
+    const classesRef = useStyles()
 
-    const numberRef = ref(1)
-
-    // setInterval(() => {
-    //   state.name += "3"
-    //   numberRef.value += 1
-    // }, 1000)
+    const schemaRef = ref(schema)
+    const handleCodeChange = (code: string) => {
+      let schema: any
+      try {
+        schema = JSON.parse(code)
+      } catch (err) {
+        schemaRef.value = schema
+      }
+    }
 
     return () => {
-      const num = numberRef.value
+      const classes = classesRef.value
+
+      const code = toJson(schemaRef.value)
+
       return (
-        <div id="app">
-          <p>{state.name + num}</p>
+        <div class={classes.editor}>
+          <MonacoEditor
+            code={code}
+            onChange={handleCodeChange}
+            title="schema eg."
+          />
         </div>
       )
     }
-
-    //    return () => {
-    //       const num = numberRef.value
-    //       return h('div', {id: 'app'}, [
-    //          h('p', state.name)
-    //       ])
-    //    }
   },
 })

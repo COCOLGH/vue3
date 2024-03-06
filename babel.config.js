@@ -1,4 +1,15 @@
+/*
+ * @Author: cocol cocol@qq.com
+ * @Date: 2024-03-04 23:36:42
+ * @LastEditors: cocol cocol@qq.com
+ * @LastEditTime: 2024-03-07 00:26:30
+ * @FilePath: \vue3\babel.config.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 module.exports = {
   presets: ["@vue/cli-plugin-babel/preset"],
-  "plugins": ["@vue/babel-plugin-jsx"]
-};
+  plugins: [
+    "@vue/babel-plugin-jsx",
+    "@babel/plugin-transform-class-static-block",
+  ],
+}

@@ -12,7 +12,7 @@ const schema = {
 
 const useStyles = createUseStyles({
   editor: {
-    minHeight: "100vh",
+    minHeight: 400,
   },
 })
 
@@ -21,6 +21,7 @@ export default defineComponent({
     const classesRef = useStyles()
 
     const schemaRef = ref(schema)
+
     const handleCodeChange = (code: string) => {
       let schema: any
       try {
@@ -36,11 +37,12 @@ export default defineComponent({
       const code = toJson(schemaRef.value)
 
       return (
-        <div class={classes.editor}>
+        <div>
           <MonacoEditor
             code={code}
             onChange={handleCodeChange}
-            title="schema eg."
+            title="schema代码编辑器demo"
+            class={classes.editor}
           />
         </div>
       )

@@ -15,15 +15,16 @@ import {
   watch,
 } from "vue"
 
-import * as Monaco from "monaco-editor"
+import * as Monaco from "monaco-editor/esm/vs/editor/editor.api"
 import type { PropType } from "vue"
 import { createUseStyles } from "vue-jss"
 
 const useStyles = createUseStyles({
   container: {
-    border: "1px solid #eee",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
+    border: "1px solid #eee",
     borderRadius: 5,
   },
   title: {
@@ -76,7 +77,6 @@ export default defineComponent({
       ))
 
       _subscription = editor.onDidChangeModelContent((event) => {
-        console.log("------>", __prevent_trigger_change_event)
         if (!__prevent_trigger_change_event) {
           props.onChange(editor.getValue(), event)
         }
@@ -119,8 +119,8 @@ export default defineComponent({
         <div class={classes.container}>
           <div class={classes.title}>
             <span>{props.title}</span>
-            <div class={classes.code} ref={containerRef}></div>
           </div>
+          <div class={classes.code} ref={containerRef}></div>
         </div>
       )
     }
